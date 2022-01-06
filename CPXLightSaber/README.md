@@ -16,4 +16,5 @@ This is an arduino project that will simulate lightsaber effects and sounds usin
 
 
 
-# Demo Video
+# Demo 
+![Lightsaber On/Off Animation](/CPXLightSaber/images/LightSaberOnOff.gif)
