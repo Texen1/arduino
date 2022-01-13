@@ -13,8 +13,10 @@ This is an arduino project that will simulate lightsaber effects and sounds usin
 
 
 # Circuit Diagram
-
+![Diagram of a NeoPixel and Circuit Diagram](/CPXLightSaber/images/CPXLightsaberDiagram.png)
 
 
 # Demo 
 ![Lightsaber On/Off Animation](/CPXLightSaber/images/LightSaberOnOff.gif)
+![Colors Animation](/CPXLightSaber/images/LightsaberColors.gif)
+
