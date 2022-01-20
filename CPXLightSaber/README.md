@@ -11,7 +11,7 @@ This is an Arduino project that will simulate lightsaber effects and sounds usin
 - Press Button A to turn the lightsaber on and off using a an extend/retract lighting effect
 - Press Button B to cycle through the color modes
 - Wave the lightsaber around to hear different pitches of lightsaber hum. The pitch depends on the movemoment of the lightsaber
-- Hit a object with the lightsaber to hear a clash sound which also has a flash effect
+- Hit an object with the lightsaber to hear a clash sound which also has a flash effect
 
 # Circuit Diagram
 ![Diagram of a NeoPixel and Circuit Diagram](/CPXLightSaber/images/CPXLightsaberDiagram.png)
