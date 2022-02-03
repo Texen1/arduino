@@ -19,8 +19,11 @@ void setup() {
   arduboy.begin();
   arduboy.setFrameRate(15);
 }
-
-int ballX = 0;
+int ballRadius = 3;
+int ballX = 1;
+int ballY = 1;
+float ballSpeedX = 5;
+float ballSpeedY =3;
 void loop() {
   if (!(arduboy.nextFrame()))
     return;
@@ -28,7 +31,21 @@ void loop() {
   arduboy.clear();
   arduboy.setCursor(4, 9);
   arduboy.print(F("Hello, Adi!"));
-  arduboy.fillCircle(ballX,32,10,WHITE);
-  ballX += 1;
+  arduboy.fillCircle(ballX,ballY,ballRadius,WHITE);
+  // If the ball's x position hits the right edge of the screen
+  if(ballX >= arduboy.width() || ballX <= 0){
+    //ballSpeedX = ballSpeedX * -1;
+    ballX = 0;
+    //ballRadius += 1;
+  }
+  if(ballY >= arduboy.height() || ballY <= 0){
+    ballSpeedY = ballSpeedY * -1;
+  }
+  arduboy.setCursor(4, 20);
+  arduboy.print("X: " + (String)ballSpeedX);
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
+  ballRadius += 1;
   arduboy.display();
+  
 }
