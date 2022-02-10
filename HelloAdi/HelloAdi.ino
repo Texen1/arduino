@@ -22,30 +22,67 @@ void setup() {
 int ballRadius = 3;
 int ballX = 1;
 int ballY = 1;
-float ballSpeedX = 5;
-float ballSpeedY =3;
+float ballSpeedX = 4;
+float ballSpeedY = 4;
+
 void loop() {
   if (!(arduboy.nextFrame()))
     return;
 
   arduboy.clear();
-  arduboy.setCursor(4, 9);
-  arduboy.print(F("Hello, Adi!"));
-  arduboy.fillCircle(ballX,ballY,ballRadius,WHITE);
-  // If the ball's x position hits the right edge of the screen
-  if(ballX >= arduboy.width() || ballX <= 0){
+  //arduboy.setCursor(4, 9);
+  //arduboy.print(F("Hello, Adi!"));
+
+  handleInputs();
+  moveAllThings();
+  drawAllThings();
+}
+
+// ==== HANDLE INPUTS ====
+void handleInputs(){
+  if (arduboy.pressed(RIGHT_BUTTON)){
+    ballX+=ballSpeedX;
+  }
+  if (arduboy.pressed(LEFT_BUTTON)){
+    ballX-=ballSpeedX;
+  }
+  if (arduboy.pressed(UP_BUTTON)){
+    ballY-=ballSpeedY;
+  }
+  if (arduboy.pressed(DOWN_BUTTON)){
+    ballY+=ballSpeedY;
+  }
+}
+
+// ==== MOVE ALL THINGS ====
+void moveAllThings(){
+  // ===== WRAP AROUND FOR RIGHT AND LEFT EDGES =====
+  if(ballX < 0){
     //ballSpeedX = ballSpeedX * -1;
-    ballX = 0;
+    ballX = arduboy.width();
     //ballRadius += 1;
+  }else if(ballX > arduboy.width()){
+    ballX = 0;
   }
-  if(ballY >= arduboy.height() || ballY <= 0){
-    ballSpeedY = ballSpeedY * -1;
+
+  // ==== STOP ON EDGE FOR TOP AND BOTTOM EDGES =====
+  if(ballY < ballRadius){
+    //ballSpeedY = ballSpeedY * -1;
+    ballY = ballRadius;
   }
-  arduboy.setCursor(4, 20);
-  arduboy.print("X: " + (String)ballSpeedX);
-  ballX += ballSpeedX;
-  ballY += ballSpeedY;
-  ballRadius += 1;
-  arduboy.display();
+  if (ballY>arduboy.height()- ballRadius){
+    ballY = arduboy.height() - ballRadius;
+  }
   
+}
+
+// === DRAW ALL THINGS ===
+void drawAllThings(){
+  arduboy.setCursor(4, 56);
+  arduboy.print("X: " + (String)ballX + " | Y: " + (String)ballY);
+  arduboy.fillCircle(ballX,ballY,ballRadius,WHITE);
+  //ballX += ballSpeedX;
+  //ballY += ballSpeedY;
+  //ballRadius += 1;
+  arduboy.display();
 }
