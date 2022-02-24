@@ -70,12 +70,12 @@ void moveAllThings(){
     //ballSpeedX = ballSpeedX * -1;
     ballX = arduboy.width();
     arduboy.setRGBled(0, 255, 255);
-    sound.tone(700,200);
+    sound.tone(700,2000);
     //ballRadius += 1;
   }else if(ballX > arduboy.width()){
     ballX = 0;
     arduboy.setRGBled(0,255,0);
-    sound.tone(700,200);
+    sound.tone(700,2000);
   }else{
     arduboy.setRGBled(0,0,0);
   }
