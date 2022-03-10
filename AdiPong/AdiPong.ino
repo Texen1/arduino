@@ -7,13 +7,16 @@ ArduboyTones sound(arduboy.audio.enabled);
 int ballRadius = 3;
 int ballX = 0; //arduboy.width()/2;
 int ballY = arduboy.height()/2;
-float ballSpeedX = 2;
+float ballSpeedX = 4;
 float ballSpeedY = 2;
 
+int paddleWidth = 3;
 int p1PaddleY = arduboy.height()/2;
 int p2PaddleY = arduboy.height()/2;
-int p1PaddleHeight = 12;
-int p2PaddleHeight = 8;
+int p1PaddleHeight = 15;
+int p2PaddleHeight = 15;
+int p1PaddleX = 4;
+int p2PaddleX = arduboy.width() - p1PaddleX;
 void setup() {
   // put your setup code here, to run once:
   arduboy.begin();
@@ -55,23 +58,41 @@ void handleInputs(){
 }
 
 void moveAllThings(){
-  if (ballY < ballRadius || ballY > arduboy.height() - ballRadius){
+  if (ballY < ballRadius){
+    ballY = ballRadius;
     ballSpeedY = -ballSpeedY;
   }
+  else if (ballY > arduboy.height() - ballRadius){
+    ballY = arduboy.height() - ballRadius;
+    ballSpeedY = -ballSpeedY;
+    
+  }
   if (ballX > arduboy.width() - ballRadius){
+    ballX = arduboy.width()/2;
+    ballY = arduboy.height()/2;
     ballSpeedX = -ballSpeedX;
+  }
+  else if(ballX >= p2PaddleX - ballRadius && 
+     ballY >= p2PaddleY - p2PaddleHeight/2 - ballRadius &&
+     ballY <= p2PaddleY + p2PaddleHeight/2 + ballRadius){
+    ballX = p2PaddleX - ballRadius;
+    ballSpeedX = -ballSpeedX;
+    ballSpeedY = (ballY - p2PaddleY)*0.75;
   }
 
   // if ballx and ballY match paddleX(4) and paddleY
   // then reverse the ballX
   if (ballX <= 0){
     ballX = arduboy.width()/2;
+    ballY = arduboy.height()/2;
     ballSpeedX = -ballSpeedX;
   }
-  else if(ballX <= 4 + 3 + ballRadius && 
-     ballY >= p1PaddleY - p1PaddleHeight/2 &&
-     ballY <= p1PaddleY + p1PaddleHeight/2){
+  else if(ballX <= p1PaddleX + paddleWidth + ballRadius && 
+     ballY >= p1PaddleY - p1PaddleHeight/2 - ballRadius &&
+     ballY <= p1PaddleY + p1PaddleHeight/2 + ballRadius){
+    ballX = p1PaddleX + paddleWidth + ballRadius;
     ballSpeedX = -ballSpeedX;
+    ballSpeedY = (ballY - p1PaddleY)*0.75;
   }
 
   ballX = ballX + ballSpeedX;
@@ -95,8 +116,8 @@ void drawNet(){
 }
 
 void drawPaddles(){
-  arduboy.fillRect(4, p1PaddleY - p1PaddleHeight/2,
-                   3, p1PaddleHeight, WHITE);
-  arduboy.fillRect(arduboy.width()-4, p2PaddleY - p2PaddleHeight/2,
-                   3 ,p2PaddleHeight, WHITE);
+  arduboy.fillRect(p1PaddleX, p1PaddleY - p1PaddleHeight/2,
+                   paddleWidth, p1PaddleHeight, WHITE);
+  arduboy.fillRect(p2PaddleX, p2PaddleY - p2PaddleHeight/2,
+                   paddleWidth ,p2PaddleHeight, WHITE);
 }
