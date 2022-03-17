@@ -7,7 +7,7 @@ ArduboyTones sound(arduboy.audio.enabled);
 int ballRadius = 3;
 int ballX = 0; //arduboy.width()/2;
 int ballY = arduboy.height()/2;
-float ballSpeedX = 4;
+float ballSpeedX = 2;
 float ballSpeedY = 2;
 
 int paddleWidth = 3;
@@ -17,6 +17,7 @@ int p1PaddleHeight = 15;
 int p2PaddleHeight = 15;
 int p1PaddleX = 4;
 int p2PaddleX = arduboy.width() - p1PaddleX;
+int p2PaddleSpeed = 2;
 void setup() {
   // put your setup code here, to run once:
   arduboy.begin();
@@ -97,6 +98,11 @@ void moveAllThings(){
 
   ballX = ballX + ballSpeedX;
   ballY = ballY + ballSpeedY;
+  if(ballY < p2PaddleY - p2PaddleHeight/3){
+    p2PaddleY = p2PaddleY - p2PaddleSpeed;
+  }else if(ballY > p2PaddleY + p2PaddleHeight/3){
+    p2PaddleY+=p2PaddleSpeed;
+  }
 }
 
 void drawAllThings(){
